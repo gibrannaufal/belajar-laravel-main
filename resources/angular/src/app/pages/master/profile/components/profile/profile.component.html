@@ -1,0 +1,91 @@
+
+<div class="container justify-content-center align-content-center">
+        <br>
+        <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body pt-5 my-auto h-100">
+                        <br>
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img  width="150px" src="{{ formModel.fotoUrl }}"
+                                alt="" class="rounded-circle" width="150">
+                            <div class="mt-3">
+                                <h4>
+                                <p class="text-muted font-size-sm">  </p>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body pt-2">
+                        <h5 class="card-title">Profile Details</h5>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Name</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{ formModel.nama }}
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Email</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{ formModel.email }}
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Nomor Telepon</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                {{ formModel.phone_number }}
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Hak Akses</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <div *ngIf="roles">
+                                    <div *ngFor="let role of roles">
+                                        <div *ngIf="role.id === formModel.user_roles_id">
+                                        {{role.nama}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                            <div class="col-sm-30 text-right">
+                                <a href="javascript: void(0);" 
+                                (click)="updateUser(formProfile, formModel)"  container="body" ngbTooltip="Ubah">
+                                <button class="btn btn-primary  float-right" >Edit Profile</button>
+                                </a>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<ng-template #formProfile let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">{{titleModal}}</h5>
+        <button type="button" class="close" (click)="modal.close()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <app-form-profile [userId]="modelId" (afterSave)="modal.close()"></app-form-profile>
+    </div>
+</ng-template>

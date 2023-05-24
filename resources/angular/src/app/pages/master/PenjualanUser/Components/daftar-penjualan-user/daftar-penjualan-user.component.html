@@ -1,0 +1,117 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h1>
+                        Rekap Penjualan User
+                    </h1>
+                  
+                    <form class="form-inline" >
+                      <div class="form-group">
+                        <label class="mr-2">Periode</label>
+                        <div class="input-group input-group-sm mr-2">
+                            <div class="input-group mr-2">
+                                <input [(ngModel)]="periode" type="month" name="periode" class="form-control" (input)="getOrder()">
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                    
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <div class="input-group input-group-sm mr-2">
+                                <input type="text" class="form-control form-control-sm"  [(ngModel)]="filter.nama"  name="nama"  />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-search" (click)="getOrder()">
+                                        </i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+   
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="generatePDF()"
+                    >
+                    <i class="fa fa-solid fa-file-pdf"></i>
+                    PDF
+                  </button>
+                  <button
+                      type="button"
+                      class="btn btn-primary"
+                      (click)="exportExcel()"
+                      >
+                      <i class="fa fa-solid fa-file-pdf"></i>
+                    Excel
+                  </button>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover table-bordered" datatable [dtOptions]="dtOptions">
+                      <thead class="bg-info text-white">
+                        <tr class="upper-head">
+                            <th id="menu-head" class="align-middle text-center">Menu</th>
+                            <th id="period-head" class="align-middle text-center">Periode: </th>
+                            <th id="total-head" class="align-middle text-center">Total</th>
+                        </tr>
+                        <tr class="lower-head">
+                            <th style="display: none"></th>
+                            <th style="display: none"></th>
+                            <th style="display: none"></th>
+                        </tr>
+                    </thead>
+                        <tbody>
+                              <!-- Grand Total -->
+                              <ng-container *ngFor="let nama of GrandTotal">
+                                <tr style="background:#eee; color:#2e2e2e">
+                                  <td>Grand Total</td>
+                                  
+                                  <ng-container *ngFor="let day of days">
+                                    <td >
+                                      <ng-container *ngFor="let grandTotal of nama[0]">
+                                        <ng-container *ngIf="parseInteger(grandTotal.tanggal | date:'dd') === day">
+                                          {{ grandTotal.total | currency: 'Rp.'}}
+                                        </ng-container>
+                                      </ng-container>
+                                    </td>
+                                    
+                                  </ng-container>
+
+                                  <td>{{ nama[1] !== 0 ? (nama[1] | currency: 'Rp.') : null }}</td>
+                                </tr>
+                              </ng-container>
+                          
+                              <!-- User  -->
+                              <tr *ngFor="let item of listOrderMenu">
+                                <ng-container *ngFor="let nama of item | keyvalue">
+                                  <td *ngIf="nama.key === 'nama'">
+                                    {{ nama.value }}
+                                  </td>
+                                  <ng-container *ngFor="let day of days">
+                                    <td *ngIf="nama.key === 'tanggal'">
+                                      <ng-container *ngFor="let date of nama.value | keyvalue">
+                                        <ng-container *ngIf="parseInteger( date.key | date:'dd') === day">
+                                          {{ date.value | currency: 'Rp.' }}
+                                        </ng-container>
+                                      </ng-container>
+                                    </td>
+                                  </ng-container>
+
+                                  <td *ngIf="nama.key === 'totalsum'">
+                                    {{ nama.value | currency: 'Rp.'}}
+                                  </td>
+
+                                </ng-container> 
+                              </tr>
+                              
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

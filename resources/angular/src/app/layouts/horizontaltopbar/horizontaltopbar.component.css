@@ -1,0 +1,79 @@
+.navbar-collapse {
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.dropdown-menu {
+  width: 220px;
+}
+
+@media (max-width: 380px) {
+  .dropdown-menu {
+    width: 100%;
+  }
+}
+
+.navbar-nav .nav-link {
+  font-size: 1rem;
+}
+
+.project-logo {
+  width: 35px;
+}
+
+.dropdown-body .item {
+  cursor: pointer;
+}
+
+.dropdown-body .item:hover {
+  background-color: #f5f5f5;
+}
+
+.dropdown-body .project-list {
+  border-bottom: 1px solid #ececec;
+}
+
+.dropdown-item {
+  color: #495057;
+  cursor: pointer;
+}
+
+.project-detail .title {
+  font-size: 13px;
+}
+
+.project-detail .description {
+  font-size: 10px;
+  color: grey;
+}
+
+.actions .items {
+  font-size: 12px;
+}
+
+@media (max-width: 641px) {
+  .mobile-profile {
+    margin-left: auto;
+  }
+  .header-item {
+    height: 3rem !important;
+  }
+  .navbar-toggler {
+    height: 3rem !important;
+  }
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+}
+
+@media (max-width: 961px) {
+  .mobile-profile {
+    margin-left: auto;
+  }
+  .header-item {
+    height: 3rem !important;
+  }
+  .navbar-toggler {
+    height: 3rem !important;
+  }
+  /* tablet, landscape iPad, lo-res laptops ands desktops */
+}
+/*# sourceMappingURL=horizontaltopbar.component.css.map */

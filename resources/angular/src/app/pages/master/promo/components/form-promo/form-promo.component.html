@@ -1,0 +1,75 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <form>
+              <div class="row">
+                <div class="col-md-7">
+                  <div class="form-group">
+                    <label class="required">Nama</label>
+                    <input [(ngModel)]="formModel.nama" type="text" name="nama" class="form-control" placeholder="Nama Promo">
+                  </div>
+                  <div class="form-group">
+                    <label class="required">type</label>
+                    <br>
+                    <div class="btn-group" role="group" ngbRadioGroup name="type" [(ngModel)]="formModel.type"
+                    (ngModelChange)="resetForm()">
+                      <label ngbButtonLabel class="btn-info">
+                        <input ngbButton type="radio" class="btn-check" value="diskon"> Diskon
+                      </label>
+                      <label ngbButtonLabel class="btn-info">
+                        <input ngbButton type="radio" class="btn-check" value="voucher"> Voucher
+                      </label>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group" [hidden]="formModel.type === 'voucher'">
+                    <label class="required" >Diskon</label>
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-text -prepend"><span class="btn-show-pass" style="cursor: pointer;"><span>%</span></span></div>
+                      <input [(ngModel)]="formModel.diskon" type="text" name="diskon" class="form-control" placeholder="Diskon"> 
+                      </div>
+                    </div>
+                  <div class="form-group"  [hidden]="formModel.type === 'diskon'">
+                    <label class="required">Nominal</label>
+                    <div class="input-group input-group-sm">
+                      <div class="input-group-text -prepend"><span class="btn-show-pass" style="cursor: pointer;"><span>Rp</span></span></div>
+                    <input [(ngModel)]="formModel.nominal" type="text" name="nominal" class="form-control" placeholder="Nominal Voucher" >
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="required">Kadaluarsa</label>
+                    <select [(ngModel)]="formModel.kadaluarsa" name="kadaluarsa" class="form-control">
+                            <option value="">------------------------------------- PILIH BERAPA HARI ----------------------------------</option>
+                            <option value="1">1 Hari</option>
+                            <option value="2">2 Hari</option>
+                            <option value="3">3 Hari</option>
+                    </select>
+                     
+                    </div>
+                
+                  <div class="form-group">
+                    <label>Syarat dan Ketentuan</label>
+                    <textarea [(ngModel)]="formModel.syarat_ketentuan" class="form-control" name="syarat_ketentuan" rows="5"></textarea>
+                  </div>
+                 
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label class="required">Foto</label>
+                    <app-upload-image [defaultImage]="formModel.fotoUrl" [ratioHigh]="4" [ratioWidth]="3" (onSubmit)="getCroppedImage($event)"></app-upload-image>
+                  </div>
+                </div>
+              </div>
+              <div class="text-right">
+                <button type="submit" class="btn btn-primary" (click)="save()">Simpan</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,89 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h1>
+                        Daftar Promo
+                    </h1>
+                    <div role="group" class="btn-group btn-group-sm btn-group-justified blocks">
+                       
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <div class="input-group input-group-sm mr-2">
+                                    <input type="text" class="form-control form-control-sm"  [(ngModel)]="filter.nama"  name="nama"  />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-search" (click)="reloadDataTable()">
+                                           
+                                            </i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                 
+                        <button type="button" class="btn btn-sm btn-primary mr-2" (click)="createPromo(formPromo)">
+                            <i class="fa fa-plus font-size-14 align-middle mr-1"></i> Tambah Promo 
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover"  datatable [dtOptions]="dtOptions">
+                        <thead class="thead-light">
+                            <tr>
+                                <td>No</td>
+                                <td width="80">Foto</td>
+                                <td>Nama</td>
+                                <td>tipe</td>
+                                <td>Nominal/Diskon</td>
+                                <td>Kadaluarsa</td>
+                                <td>syarat ketentuan</td>
+                                <td width="90"></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let val of listPromo ; let i = index">
+                                <td>{{val.no}}</td>
+                                <td><img src="{{val.fotoUrl}}" class="rounded-circle img-thumb" style="width: 65px; height: 80px;"></td>
+                                <td class="vertical-middle">{{val.nama}}</td>
+                                <td class="vertical-middle">{{val.type}}</td>
+
+                                <td class="vertical-middle">
+                                    <ng-container *ngIf="val.nominal != null">
+                                      {{val.promoHuruf | currency: 'Rp.'}}
+                                    </ng-container>
+                                    <ng-container *ngIf="val.diskon != null">
+                                      {{val.promoHuruf}} %
+                                    </ng-container>
+                                </td>
+                                <td class="vertical-middle">{{val.kadaluarsa}} hari</td>
+                                <td class="vertical-middle">{{val.syarat_ketentuan}}</td>
+                                <td class="vertical-middle text-right">
+                                    <a href="javascript: void(0);" class="align-middle mr-2" (click)="updatePromo(formPromo, val)" placement="left" container="body" ngbTooltip="Ubah">
+                                        <i class="fa fa-edit font-size-14"></i>
+                                    </a>
+                                    <a href="javascript: void(0);" class="align-middle" (click)="deletePromo(val.id_promo)" placement="left" container="body" ngbTooltip="Hapus">
+                                        <i class="fa fa-trash font-size-14"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #formPromo let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">{{titleModal}}</h5>
+        <button type="button" class="close" (click)="modal.close()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <app-form-promo [promoId]="modelId" (afterSave)="modal.close(); reloadDataTable()"></app-form-promo>
+    </div>
+</ng-template>

@@ -1,0 +1,139 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h1>
+                        Laporan Penjualan
+                    </h1>
+                    <div role="group" class="btn-group btn-group-sm btn-group-justified blocks">
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <label class="mr-2">Periode</label>
+                                <div class="input-group input-group-sm mr-2">
+                                    <div class="dp-hidden position-absolute">
+                                        <div class="input-group">
+                                            <input
+                                                name="datepicker"
+                                                class="form-control"
+                                                ngbDatepicker
+                                                #datepicker="ngbDatepicker"
+                                                [autoClose]="'outside'"
+                                                (dateSelect)="onDateSelection($event)"
+                                                [displayMonths]="2"
+                                                [dayTemplate]="t"
+                                                outsideDays="hidden"
+                                                [startDate]="fromDate!"
+                                                tabindex="-1"
+                                            />
+                                            <ng-template #t let-date let-focused="focused">
+                                                <span
+                                                    class="custom-day"
+                                                    [class.focused]="focused"
+                                                    [class.range]="isRange(date)"
+                                                    [class.faded]="isHovered(date) || isInside(date)"
+                                                    (mouseenter)="hoveredDate = date"
+                                                    (mouseleave)="hoveredDate = null"
+                                                >
+                                                    {{ date.day }}
+                                                </span>
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                    <div class="input-group mr-2">
+                                        <input
+                                            #dpFromDate
+                                            class="form-control"
+                                            placeholder="yyyy-mm-dd"
+                                            name="dpFromDate"
+                                            (click)="datepicker.toggle()"
+                                            [value]="formatter.format(fromDate)"
+                                        />
+                                    </div>
+                                    <span class="mt-2">s/d</span> 
+                                    <div class="input-group ml-2">
+                                        <input
+                                            #dpToDate
+                                            class="form-control"
+                                            placeholder="yyyy-mm-dd"
+                                            name="dpToDate"
+                                            (click)="datepicker.toggle()"
+                                            [value]="formatter.format(toDate)"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="mr-2">Nama</label>
+                                <div class="input-group input-group-sm mr-2">
+                                    <input type="text" class="form-control form-control-sm" [(ngModel)]="filter.nama" name="nama" />
+                                    <div class="input-group-append" (click)="reloadDataTable()">
+                                        <span class="input-group-text">
+                                            <em class="fa fa-search"></em>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped" datatable [dtOptions]="dtOptions">
+                        <thead class="bg-info text-white">
+                            <tr>
+                                <td rowspan="2" class="align-middle text-center">No</td>
+                                <td rowspan="2" class="align-middle text-center">No Struk</td>
+                                <td rowspan="2" class="align-middle text-center">Customer</td>
+                                <td rowspan="2" class="align-middle text-center">Tanggal</td>
+                                <td rowspan="2" class="align-middle text-center">Menu</td>
+                                <td rowspan="2" class="align-middle text-center" style="white-space: nowrap;width: 1%;">Jumlah</td>
+                                <td rowspan="2" class="align-middle text-center">Harga</td>
+                                <td rowspan="2" class="align-middle text-center">Total</td>
+                                <td colspan="2" class="align-middle text-center">Promo</td>
+                                <td rowspan="2" class="align-middle text-center">Total Bayar</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">Diskon</td>
+                                <td class="text-center">Voucher</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-template let-penjualan ngFor [ngForOf]="listPenjualan">
+                                <tr *ngFor="let detail of penjualan.data_detail">
+                                    <ng-template [ngIf]="detail.no == 1" [ngIfElse]="menuOnly">
+                                        <td class="align-middle text-center" style="white-space: nowrap;width: 1%;" [attr.rowspan]="penjualan.data_detail.length">{{penjualan.no}}</td>
+                                        <td class="align-middle" [attr.rowspan]="penjualan.data_detail.length">{{penjualan.no_struk}}</td>
+                                        <td class="align-middle text-center" [attr.rowspan]="penjualan.data_detail.length">
+                                            <span *ngFor="let customer of penjualan.data_customer">
+                                                {{customer.nama_customer}}
+                                            </span>
+                                        </td>
+                                        <td class="align-middle text-center" [attr.rowspan]="penjualan.data_detail.length">{{penjualan.tanggal}}</td>
+                                        <td class="align-middle text-center" style="white-space: nowrap;width: 1%;">{{detail.nama}}</td>
+                                        <td class="align-middle text-center">{{detail.jumlah}}</td>
+                                        <td class="align-middle text-center">{{detail.harga | currency:'Rp. '}}</td>
+                                        <td class="align-middle text-center">{{detail.total | currency:'Rp. '}}</td>
+                                        <td class="align-middle text-center" [attr.rowspan]="penjualan.data_detail.length" style="white-space: nowrap;width: 1%;"><span *ngIf="penjualan.potongan > 0">{{penjualan.potongan | currency:'Rp. '}} ({{penjualan.diskon}} %)</span></td>
+                                        <td class="align-middle text-center" [attr.rowspan]="penjualan.data_detail.length"><span *ngIf="penjualan.id_voucher">{{penjualan.potongan | currency:'Rp. '}}</span></td>
+                                        <td class="align-middle text-center" [attr.rowspan]="penjualan.data_detail.length">{{penjualan.total_bayar | currency:'Rp. '}}</td>
+                                    </ng-template>
+                                    <ng-template #menuOnly>
+                                        <td class="align-middle text-center" style="white-space: nowrap;width: 1%;">{{detail.nama}}</td>
+                                        <td class="align-middle text-center">{{detail.jumlah}}</td>
+                                        <td class="align-middle text-center">{{detail.harga | currency:'Rp. '}}</td>
+                                        <td class="align-middle text-center">{{detail.total | currency:'Rp. '}}</td>
+                                    </ng-template>
+                                </tr>
+                            </ng-template>
+                        </tbody>
+                        <tfoot class="bg-info text-white">
+                            <tr>
+                                <th colspan="7">Grand Total</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

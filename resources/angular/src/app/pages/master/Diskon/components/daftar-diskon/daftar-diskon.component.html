@@ -1,0 +1,72 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h1>
+                        Daftar Diskon
+                    </h1>
+                    <div role="group" class="btn-group btn-group-sm btn-group-justified blocks">
+                       
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <div class="input-group input-group-sm mr-2">
+                                    <input type="text" class="form-control form-control-sm"  [(ngModel)]="filter.nama"  name="nama"  />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-search" (click)="reloadDataTable()">
+                                           
+                                            </i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+    
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table datatable [dtOptions]="dtOptions" >
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                            </tr>
+                          </thead>
+    
+                      <tbody>
+                        <tr *ngFor="let val of listCustomer; let i = index">
+                          <td>{{val.no}}</td>
+                          
+                          <td class="text-capitalize text-start" >{{val.nama}}</td>
+                   
+                          <ng-container *ngFor="let promo of promo; let j = index">
+                          <td  class="text-center">
+                              <span *ngFor="let diskon of val.diskon">
+                                <ng-container *ngIf="diskon.id_promo === promo.id_promo">
+                                    <button class="btn btn-sm btn-success" *ngIf="diskon.status === 1"
+                                    (click)="createDiskon(val.id, diskon.id_promo, diskon.id_diskon, 0)">
+                                    <em class="fa fa-check"></em>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" *ngIf="diskon.status === 0 "
+                                    (click)="createDiskon(val.id, diskon.id_promo, diskon.id_diskon, 1)">
+                                        <em class="fa fa-times"></em>
+                                    </button>
+                                </ng-container>
+                              </span>
+                          </td>
+                          </ng-container>
+                        </tr>
+                      
+                      </tbody>
+                     <tfoot> 
+                        <tr> 
+                     
+                            
+                        </tr>
+                     </tfoot>
+                    </table>
+                </div>                  
+            </div>
+        </div>
+    </div>
+</div>

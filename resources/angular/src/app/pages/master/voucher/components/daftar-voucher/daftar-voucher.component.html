@@ -1,0 +1,95 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h1>
+                        Daftar Voucher
+                    </h1>
+                    <div role="group" class="btn-group btn-group-sm btn-group-justified blocks">
+                       
+                        <form class="form-inline">
+                            <div class="form-group">
+                                <div class="input-group input-group-sm mr-2">
+                                    <input type="text" class="form-control form-control-sm"  [(ngModel)]="filter.customer"  name="customer"  />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-search" (click)="reloadDataTable()">
+                                           
+                                            </i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                 
+                        <button type="button" class="btn btn-sm btn-primary mr-2" (click)="createVoucher(formVoucher)">
+                            <i class="fa fa-plus font-size-14 align-middle mr-1"></i> Tambah voucher 
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover"  datatable [dtOptions]="dtOptions">
+                        <thead class="thead-light">
+                            <tr>
+                                <td>No</td>
+                                <td width="80">Foto</td>
+                                <td>Customer</td>
+                                <td>Voucher</td>
+                                <td>jumlah</td>
+                                <td>nominal</td>
+                                <td>Periode awal</td>
+                                <td>Periode selesai</td>
+                                <td>Catatan</td>
+                                <td>Status</td>
+                                <td width="90"></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let val of listVoucher; let i = index">
+                                <td>{{val.no}}</td>
+                                <td><img src="{{val.fotoUrl}}" class="rounded-circle img-thumb" style="width: 65px; height: 80px;"></td>
+                                <td class="vertical-middle">{{val.customer}}</td>
+                                <td class="vertical-middle">{{val.promo}}</td>
+                                <td class="vertical-middle">{{val.jumlah}}</td>
+                                <td class="vertical-middle">{{val.nominal}}</td>
+                                <td class="vertical-middle">{{val.periode_mulai}}</td>
+                                <td class="vertical-middle">{{val.periode_selesai}}</td>
+                                <td class="vertical-middle">{{val.catatan}}</td>
+                                <td class="vertical-middle">
+                                    <span *ngIf="val.status == 1">Aktif</span>
+                                    <span *ngIf="val.status == 0">Non Aktif</span>
+                                </td>
+                                  
+                                <td class="vertical-middle text-right">
+                                    
+                                    <a href="javascript: void(0);" class="align-middle mr-2" (click)="updateStatus(val.id_voucher)" placement="left" container="body" ngbTooltip="Ubah Status">
+                                        <i class="fa fa-bell font-size-14"></i>
+                                    </a>
+                                    <a href="javascript: void(0);" class="align-middle mr-2" (click)="updateVoucher(formVoucher, val)" placement="left" container="body" ngbTooltip="Ubah">
+                                        <i class="fa fa-edit font-size-14"></i>
+                                    </a>
+                                    <a href="javascript: void(0);" class="align-middle" (click)="deleteVoucher(val.id_voucher)" placement="left" container="body" ngbTooltip="Hapus">
+                                        <i class="fa fa-trash font-size-14"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #formVoucher let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">{{titleModal}}</h5>
+        <button type="button" class="close" (click)="modal.close()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <app-form-voucher [voucherId]="modelId" (afterSave)="modal.close(); reloadDataTable()"></app-form-voucher>
+    </div>
+</ng-template>

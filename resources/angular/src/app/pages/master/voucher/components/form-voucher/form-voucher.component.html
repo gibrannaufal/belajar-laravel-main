@@ -1,0 +1,73 @@
+<form>
+    <div class="form-group row">
+        <label class="col-md-4">Pilih Customer</label>
+        <div class="col-md-8">
+            <select class="form-control" name="id_customer" [(ngModel)]="formModel.id_customer">
+               
+                <option *ngFor="let customers of customer;" [value]="customers.id" [selected]="formModel.id_customer == customers.id">{{customers.nama}}</option>
+            </select>
+        </div>
+     </div>
+     <div class="form-group row">
+        <label class="col-md-4">Pilih Voucher</label>
+        <div class="col-md-8">
+            <select class="form-control" name="id_promo" [(ngModel)]="formModel.id_promo" (ngModelChange)="formAutoFill()" >
+                <option *ngFor="let vouchers of promo;" [value]="vouchers.id_promo" [selected]="formModel.id_promo == vouchers.id_promo">{{vouchers.nama}}</option>
+            </select>
+        </div>
+     </div>
+     
+    <div class="form-group row">
+        <label class="col-md-4 required">Jumlah</label>
+        <div class="col-md-8">
+            <input [(ngModel)]="formModel.jumlah" type="number" name="jumlah" class="form-control"
+                placeholder="jumlah kupon" (input)="formAutoFill()" [min]="1">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-4 required">nominal</label>
+        <div class="col-md-8">
+            <input [(ngModel)]="formModel.nominal" type="text"  name="nominal" class="form-control" 
+                placeholder="nominal" [disabled]="true" >
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-4 required">periode mulai</label>
+        <div class="col-md-8">
+            <input [(ngModel)]="formModel.periode_mulai" type="date" name="periode_mulai" class="form-control"
+                  (input)="formAutoFill()">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-4 required">periode selesai</label>
+        <div class="col-md-8">
+            <input [(ngModel)]="formModel.periode_selesai" type="date" name="periode_selesai" class="form-control" 
+             [disabled]="true" >
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-4 required">catatan</label>
+        <div class="col-md-8">
+            <textarea [(ngModel)]="formModel.catatan" type="text" name="catatan" class="form-control"
+                placeholder="Catatan"> </textarea>
+        </div>
+    </div>
+
+   <div class="form-group row">
+        <label class="col-md-4 required">status</label>
+        <div class="col-md-8">
+            <input [(ngModel)]="formModel.status" type="hidden" name="status">
+            <input type="text" name="status_display" class="form-control"
+                        [ngClass]="{'text-success': formModel.status == 1, 'text-danger': formModel.status == 0}"
+                        [value]="formModel.status == 1 ? 'Aktif' : (formModel.status == 0 ? 'Tidak Aktif' : '')" readonly>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-4"></label>
+        <div class="col-md-8">
+            <button type="submit" class="btn btn-primary" (click)="save()">Simpan</button>
+        </div>
+    </div>
+</form>
