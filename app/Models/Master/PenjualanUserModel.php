@@ -40,7 +40,6 @@ class PenjualanUserModel extends Model
        
        if (!empty($filter['nama'])) {
            $orderUser->where('user_auth.nama', 'LIKE', '%'.$filter['nama'].'%');
-          
        }
        if (isset($filter['bulan'])) {
            $bulan = $filter['bulan'];
