@@ -46,6 +46,7 @@ class PenjualanUserController extends Controller
                 'kategori' =>  $request->kategori,
                 'bulan' => $request->bulan,
                 'content' =>  $orderMenuData['links'],
+                'total' => $orderMenuData['total']
             ];
 
             // Load the view and convert it to HTML
@@ -82,6 +83,7 @@ class PenjualanUserController extends Controller
             'kategori' =>  $request->kategori,
             'bulan' => $request->bulan,
             'content' =>  $orderMenuData['links'],
+            'total' => $orderMenuData['total']
         ];
 
         // Generate Excel using Laravel-Excel

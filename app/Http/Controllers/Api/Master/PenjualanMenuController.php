@@ -45,6 +45,7 @@ class PenjualanMenuController extends Controller
                 'jmlHari' => $request->hari,
                 'bulan' =>  $request->bulan,
                 'content' =>  $orderMenuData['links'],
+                'total' => $orderMenuData['total']
             ];
 
             // Load the view and convert it to HTML
@@ -81,6 +82,7 @@ class PenjualanMenuController extends Controller
             'jmlHari' => $request->hari,
             'bulan' => $request->bulan,
             'content' => $orderMenuData['links'],
+            'total' => $orderMenuData['total']
         ];
 
         // Generate Excel using Laravel-Excel

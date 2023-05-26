@@ -140,15 +140,15 @@ export class OrderMenuComponent implements OnInit {
        const { list, total } = res.data;
        
        this.GrandTotal = total;
-      //  console.log(this.GrandTotal);
+       console.log(this.GrandTotal);
 
     
        this.listOrderMenu = list;
-       console.log(this.listOrderMenu);
+      //  console.log(this.listOrderMenu);
 
        this.orderMenuArray = Object.entries(this.listOrderMenu).map(([key, value]) => ({ key, value: Object.values(value) })) as { key: string, value: any[] }[];
  
-       console.log(this.orderMenuArray);
+      //  console.log(this.orderMenuArray);
      },
      (err: any) => {
        console.log(err);

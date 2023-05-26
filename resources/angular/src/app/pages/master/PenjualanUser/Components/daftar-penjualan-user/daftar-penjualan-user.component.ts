@@ -171,7 +171,7 @@ export class DaftarPenjualanUserComponent implements OnInit {
      (res) => {
        const file = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
        const fileURL = URL.createObjectURL(file);
-       window.open(fileURL);
+      //  window.open(fileURL);
        const a = document.createElement('a');
        a.href = fileURL;
        a.target = '_blank';
@@ -195,7 +195,7 @@ export class DaftarPenjualanUserComponent implements OnInit {
       (res) => {
         var file = new Blob([res], { type: 'application/pdf' })
         var fileURL = URL.createObjectURL(file)
-        window.open(fileURL)
+        // window.open(fileURL)
         var a = document.createElement('a')
         a.href = fileURL;
         a.target = '_blank';
