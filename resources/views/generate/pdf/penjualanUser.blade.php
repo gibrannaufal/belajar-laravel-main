@@ -77,7 +77,30 @@
                 @endforeach
             </tr>
         </thead>
-        <tbody> 
+        <tbody>
+            <tr> 
+                <td> 
+                    Grand Total
+                </td>
+                @foreach ($hariArray as $hari)
+                    <td class="text-center">
+                        @foreach ($data['total'] as $category => $items)
+                            @foreach ($items[0] as $total => $totals)
+                                @if(  date('d', strtotime( $totals['tanggal']) )  == $hari)
+
+                                {{ 'Rp. ' . number_format($totals['total'], 0, ',', '.') }}
+
+
+                                @endif
+                            @endforeach
+                        @endforeach
+                    </td>
+                @endforeach
+                <td> 
+                      {{ 'Rp. ' . number_format($data['total'][0][1], 0, ',', '.') }}
+                </td>
+            </tr>
+            
             @foreach ($data['content'] as $user => $items)
                 <tr>
                     <td >{{ $items['nama']  }}</td>
@@ -87,13 +110,13 @@
                     <td>
                         @foreach ($items['tanggal'] as $date => $value)
                         @if (  date('d', strtotime($date)) == $hari )
-                            {{ $value }}
+                              {{ 'Rp. ' . number_format($value, 0, ',', '.') }}
                         @endif
                         @endforeach
                     </td>
                 @endforeach
             
-                    <td >{{ $items['totalsum']  }}</td>
+                    <td > {{ 'Rp. ' . number_format($items['totalsum'] , 0, ',', '.') }}</td> 
             
                 </tr>
             @endforeach
